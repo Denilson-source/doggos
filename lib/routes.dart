@@ -1,5 +1,7 @@
-import 'package:flutter/Material.dart';
 import 'package:get/get.dart';
+
+import 'modules/home/home_bindings.dart';
+import 'modules/home/home_page.dart';
 
 abstract class Routes {
   static const home = '/';
@@ -7,7 +9,8 @@ abstract class Routes {
   static List<GetPage> pages = [
     GetPage(
       name: home,
-      page: () => SizedBox(),
+      page: () => HomePage(),
+      binding: HomeBindings(),
     ),
   ];
 }
