@@ -1,3 +1,4 @@
+import 'package:doggos/modules/breeds_list/breeds_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,7 +17,7 @@ class HomePage extends GetView<HomeController> {
     return Obx(() {
       switch (controller.currentTab) {
         case HomeTab.home:
-          return SizedBox();
+          return BreedsListPage();
         case HomeTab.favorites:
           return SizedBox();
       }

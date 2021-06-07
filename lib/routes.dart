@@ -1,3 +1,4 @@
+import 'package:doggos/modules/breeds_list/breeds_list_bindings.dart';
 import 'package:get/get.dart';
 
 import 'modules/home/home_bindings.dart';
@@ -10,7 +11,10 @@ abstract class Routes {
     GetPage(
       name: home,
       page: () => HomePage(),
-      binding: HomeBindings(),
+      bindings: [
+        HomeBindings(),
+        BreedsListBindings(),
+      ],
     ),
   ];
 }
