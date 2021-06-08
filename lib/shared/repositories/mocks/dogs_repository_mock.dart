@@ -6,7 +6,7 @@ import '../interfaces/i_dogs_repository.dart';
 
 class DogsRepositoryMock implements IDogsRepository {
   @override
-  Future<List<String>> getBreedImages(String bread) async {
+  Future<List<String>> getBreedImages(String breed) async {
     await delay();
     return List.generate(
       10,

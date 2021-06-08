@@ -1,3 +1,4 @@
+import 'package:doggos/shared/repositories/implementations/dogs_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,5 +30,7 @@ class MyApp extends StatelessWidget {
 void initialBindings() {
   Get.put(HttpService(), permanent: true);
 
-  Get.put<IDogsRepository>(DogsRepositoryMock(), permanent: true);
+  Get.put<IDogsRepository>(DogsRepository(), permanent: true);
+
+  // Get.put<IDogsRepository>(DogsRepositoryMock(), permanent: true);
 }

@@ -5,7 +5,7 @@ abstract class IDogsRepository {
   static IDogsRepository get to => Get.find();
 
   Future<List<Breed>> getBreeds();
-  Future<List<String>> getBreedImages(String bread);
+  Future<List<String>> getBreedImages(String breed);
 }
 
 enum GetBreedsError { unexpected }
