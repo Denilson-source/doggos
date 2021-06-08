@@ -4,8 +4,9 @@ import 'package:get/get.dart';
 
 class ImageCarrousel extends StatefulWidget {
   final List<String> images;
+  final int? initialIndex;
 
-  ImageCarrousel({required this.images});
+  ImageCarrousel({required this.images, this.initialIndex});
 
   @override
   _ImageCarrouselState createState() => _ImageCarrouselState();
@@ -21,6 +22,7 @@ class _ImageCarrouselState extends State<ImageCarrousel>
     super.initState();
 
     tabController = TabController(
+      initialIndex: widget.initialIndex ?? 0,
       length: widget.images.length,
       vsync: this,
     );
@@ -45,25 +47,33 @@ class _ImageCarrouselState extends State<ImageCarrousel>
 
   @override
   Widget build(BuildContext context) {
-    return SizeTransition(
-      sizeFactor: Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
-        parent: animationController!,
-        curve: Curves.fastLinearToSlowEaseIn,
-      )),
-      child: Column(
-        children: [
-          AspectRatio(
-            aspectRatio: 1.5,
-            // height: 300,
-            // color: Colors.red,
-            child: TabBarView(
-              controller: tabController,
-              children: widget.images.map((e) => _buildImage(e)).toList(),
+    return Center(
+      child: Container(
+        height: Get.height * 0.5,
+        child: Material(
+          color: Colors.transparent,
+          child: SizeTransition(
+            sizeFactor: Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+              parent: animationController!,
+              curve: Curves.fastLinearToSlowEaseIn,
+            )),
+            child: Column(
+              children: [
+                AspectRatio(
+                  aspectRatio: 1.5,
+                  // height: 300,
+                  // color: Colors.red,
+                  child: TabBarView(
+                    controller: tabController,
+                    children: widget.images.map((e) => _buildImage(e)).toList(),
+                  ),
+                ),
+                SizedBox(height: 10),
+                _buildIndicator(),
+              ],
             ),
           ),
-          SizedBox(height: 10),
-          _buildIndicator(),
-        ],
+        ),
       ),
     );
   }
@@ -85,16 +95,27 @@ class _ImageCarrouselState extends State<ImageCarrousel>
             child: Text(
               '${tabController!.index + 1}',
               textAlign: TextAlign.center,
+              style: Get.textTheme.bodyText1!.copyWith(
+                color: Colors.white,
+              ),
             ),
           ),
           SizedBox(width: 5),
-          Text('/'),
+          Text(
+            '/',
+            style: Get.textTheme.bodyText1!.copyWith(
+              color: Colors.white,
+            ),
+          ),
           SizedBox(width: 5),
           Container(
             width: 25,
             child: Text(
               '${tabController!.length}',
               textAlign: TextAlign.center,
+              style: Get.textTheme.bodyText1!.copyWith(
+                color: Colors.white,
+              ),
             ),
           ),
         ],

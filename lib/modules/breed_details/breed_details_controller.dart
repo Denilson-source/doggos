@@ -1,3 +1,4 @@
+import 'package:doggos/modules/breed_details/widgets/image_carrousel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -54,5 +55,12 @@ class BreedDetailsController extends GetxController
       if (e is GetBreedImagesError) return state.setHasError(e);
       state.setHasError(GetBreedImagesError.unexpected);
     }
+  }
+
+  void showImageCarrousel(int index) {
+    Get.dialog(ImageCarrousel(
+      images: breed.images!,
+      initialIndex: index,
+    ));
   }
 }

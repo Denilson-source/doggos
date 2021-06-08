@@ -1,10 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 
 import '../../shared/widgets/custom_error.dart';
 import 'breed_details_controller.dart';
-import 'widgets/image_carrousel.dart';
 
 class BreedDetailsPage extends GetView<BreedDetailsController> {
   @override
@@ -15,14 +15,14 @@ class BreedDetailsPage extends GetView<BreedDetailsController> {
       ),
       body: Column(
         children: [
-          _buildImages(),
           _buildVariantsList(),
+          Expanded(child: _buildImagesGrid()),
         ],
       ),
     );
   }
 
-  Widget _buildImages() {
+  Widget _buildImagesGrid() {
     return Obx(() {
       final state = controller.state;
 
@@ -57,8 +57,63 @@ class BreedDetailsPage extends GetView<BreedDetailsController> {
         return SizedBox();
       }
 
-      return ImageCarrousel(images: images);
+      return Container(
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '${images.length} images found',
+              style: Get.textTheme.subtitle1!.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 10),
+            Expanded(
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  childAspectRatio: 1,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ),
+                padding: EdgeInsets.symmetric(vertical: 10),
+                itemCount: images.length,
+                itemBuilder: (context, index) => _buildGridItem(
+                  image: images[index],
+                  index: index,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
     });
+  }
+
+  Widget _buildGridItem({required String image, required int index}) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      clipBehavior: Clip.hardEdge,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          CachedNetworkImage(
+            imageUrl: image,
+            fit: BoxFit.cover,
+          ),
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: () => controller.showImageCarrousel(index),
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   Widget _buildVariantsList() {
