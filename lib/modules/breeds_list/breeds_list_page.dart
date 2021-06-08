@@ -43,6 +43,7 @@ class BreedsListPage extends GetView<BreedsListController> {
       }
 
       return ListView.builder(
+        itemCount: breeds.length,
         itemBuilder: (context, index) => _buildListItem(breeds[index]),
       );
     });
