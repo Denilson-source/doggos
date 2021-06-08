@@ -17,19 +17,22 @@ class CustomError extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(error),
-          if (action != null) ...[
-            SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: action,
-              child: Text(actionLabel!),
-            ),
-          ]
-        ],
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(error),
+            if (action != null) ...[
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: action,
+                child: Text(actionLabel!),
+              ),
+            ]
+          ],
+        ),
       ),
     );
   }

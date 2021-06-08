@@ -1,3 +1,6 @@
+import 'package:doggos/modules/breed_details/breed_details_page.dart';
+import 'package:doggos/modules/breeds_list/breeds_list_page.dart';
+import 'package:doggos/routes.dart';
 import 'package:get/get.dart';
 
 import '../../shared/model/breed.dart';
@@ -32,6 +35,6 @@ class BreedsListController extends GetxController {
   }
 
   void toBreedImages(Breed breed) {
-    throw UnimplementedError();
+    Get.toNamed(Routes.breedDetails, arguments: breed);
   }
 }
