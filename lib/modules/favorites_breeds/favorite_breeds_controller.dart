@@ -33,6 +33,15 @@ class FavoriteBreedsController extends GetxController {
     }
   }
 
+  Future<void> refreshBreeds() async {
+    try {
+      List<Breed> breeds = await IFavoritesRepository.to.getFavorites();
+      this.breeds = breeds;
+    } catch (e) {
+      Get.snackbar('Error', 'Something went wrong');
+    }
+  }
+
   void toBreedImages(Breed breed) async {
     await Get.toNamed(Routes.breedDetails, arguments: breed);
     if (!breed.isFavorite!) {

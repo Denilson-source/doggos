@@ -39,11 +39,23 @@ class FavoriteBreedsPage extends GetView<FavoriteBreedsController> {
 
       List<Breed> breeds = controller.breeds;
       if (breeds.isEmpty) {
-        return CustomError(error: 'No breeds was found');
+        return Stack(
+          children: [
+            RefreshIndicator(
+              onRefresh: controller.refreshBreeds,
+              child: ListView(),
+            ),
+            CustomError(error: 'No breeds was found'),
+          ],
+        );
       }
 
-      return ListView.builder(
-        itemBuilder: (context, index) => _buildListItem(breeds[index]),
+      return RefreshIndicator(
+        onRefresh: controller.refreshBreeds,
+        child: ListView.builder(
+          itemCount: breeds.length,
+          itemBuilder: (context, index) => _buildListItem(breeds[index]),
+        ),
       );
     });
   }
