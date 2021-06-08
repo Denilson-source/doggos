@@ -21,6 +21,9 @@ class MyApp extends StatelessWidget {
       title: 'Doggos',
       theme: ThemeData(
         primarySwatch: hexToMaterialColor('#161b22'),
+        appBarTheme: AppBarTheme(
+          brightness: Brightness.dark,
+        ),
       ),
       initialRoute: Routes.home,
       getPages: Routes.pages,
