@@ -1,7 +1,8 @@
-import 'package:doggos/modules/breeds_list/breeds_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../breeds_list/breeds_list_page.dart';
+import '../favorites_breeds/favorite_breeds_page.dart';
 import 'home_controller.dart';
 
 class HomePage extends GetView<HomeController> {
@@ -19,7 +20,7 @@ class HomePage extends GetView<HomeController> {
         case HomeTab.home:
           return BreedsListPage();
         case HomeTab.favorites:
-          return SizedBox();
+          return FavoriteBreedsPage();
       }
     });
   }
