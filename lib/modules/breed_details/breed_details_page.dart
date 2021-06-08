@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../shared/widgets/custom_error.dart';
 import 'breed_details_controller.dart';
+import 'widgets/favorite_button.dart';
 
 class BreedDetailsPage extends GetView<BreedDetailsController> {
   @override
@@ -12,6 +13,7 @@ class BreedDetailsPage extends GetView<BreedDetailsController> {
     return Scaffold(
       appBar: AppBar(
         title: Text(controller.breed.name),
+        actions: [FavoriteButton()],
       ),
       body: Column(
         children: [

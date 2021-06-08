@@ -1,10 +1,11 @@
-import 'package:doggos/shared/repositories/implementations/dogs_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'routes.dart';
 import 'shared/repositories/interfaces/i_dogs_repository.dart';
+import 'shared/repositories/interfaces/i_favorites_repository.dart';
 import 'shared/repositories/mocks/dogs_repository_mock.dart';
+import 'shared/repositories/mocks/favorites_repository_mock.dart';
 import 'shared/services/http_service.dart';
 import 'shared/utils/color.dart';
 
@@ -30,7 +31,8 @@ class MyApp extends StatelessWidget {
 void initialBindings() {
   Get.put(HttpService(), permanent: true);
 
-  Get.put<IDogsRepository>(DogsRepository(), permanent: true);
+  // Get.put<IDogsRepository>(DogsRepository(), permanent: true);
 
-  // Get.put<IDogsRepository>(DogsRepositoryMock(), permanent: true);
+  Get.put<IDogsRepository>(DogsRepositoryMock(), permanent: true);
+  Get.put<IFavoritesRepository>(FavoritesRepositoryMock(), permanent: true);
 }

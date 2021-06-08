@@ -1,16 +1,15 @@
-import 'package:doggos/modules/breed_details/widgets/image_carrousel.dart';
+import 'package:doggos/shared/repositories/interfaces/i_favorites_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../shared/model/breed.dart';
 import '../../shared/repositories/interfaces/i_dogs_repository.dart';
 import '../../shared/utils/controller_state.dart';
+import 'widgets/image_carrousel.dart';
 
 class BreedDetailsController extends GetxController
     with SingleGetTickerProviderMixin {
   static BreedDetailsController get to => Get.find();
-
-  TabController? imagesSliderController;
 
   final _rxBreed = Rx<Breed>(Get.arguments);
   Breed get breed => _rxBreed.value;
@@ -27,20 +26,10 @@ class BreedDetailsController extends GetxController
     } else {
       state.setHasData();
     }
-  }
 
-  void init() {
-    List<String> images = breed.images ?? [];
-
-    if (images.isEmpty) {
-      return fetchImages();
+    if (breed.isFavorite == null) {
+      checkFavorite();
     }
-
-    state.setHasData();
-    this.imagesSliderController = TabController(
-      length: images.length,
-      vsync: this,
-    );
   }
 
   void fetchImages() async {
@@ -62,5 +51,34 @@ class BreedDetailsController extends GetxController
       images: breed.images!,
       initialIndex: index,
     ));
+  }
+
+  void checkFavorite() async {
+    try {
+      breed.isFavorite = await IFavoritesRepository.to.isFavorite(breed.name);
+      _rxBreed.refresh();
+    } catch (e) {
+      breed.isFavorite = false;
+      _rxBreed.refresh();
+    }
+  }
+
+  void toggleFavorite() async {
+    bool isFavorite = breed.isFavorite!;
+    breed.isFavorite = !isFavorite;
+    _rxBreed.refresh();
+
+    try {
+      if (isFavorite) {
+        await IFavoritesRepository.to.removeFavorite(breed.name);
+      } else {
+        await IFavoritesRepository.to.addFavorite(breed);
+      }
+    } catch (e) {
+      breed.isFavorite = isFavorite;
+      _rxBreed.refresh();
+
+      Get.snackbar("Error", 'Error while trying favorite/unfavorite');
+    }
   }
 }
